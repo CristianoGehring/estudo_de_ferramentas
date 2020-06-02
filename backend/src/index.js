@@ -1,24 +1,21 @@
 require('dotenv').config()
-var express = require('express')
-var app = express()
-const ObjectId = require('mongodb').ObjectID
-const MongoClient = require('mongodb').MongoClient
-const uri = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@cluster0-lozjt.mongodb.net/test?retryWrites=true&w=majority"
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const http = require('http')
 
+const routes = require('./routes')
 
-MongoClient.connect(uri, (err, client) => {
-  if (err) return console.log(err)
-  db = client.db('estudo') // coloque o nome do seu DB
+const app = express()
+const server = http.Server(app)
 
-  app.listen(3000, () => {
-    console.log('Server running on port 3000')
-  })
+mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@cluster0-lozjt.mongodb.net/" + process.env.DB_NAME + "?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
 
-app.get('/', function (req, res) {
-  db.collection('data').find().toArray((err, results) => {
-    if (err) return console.log(err)
-    console.log(results)
-    res.send('Hello World!')
-  })
-})
+app.use(cors())
+app.use(express.json())
+app.use(routes)
+
+server.listen(3000)
