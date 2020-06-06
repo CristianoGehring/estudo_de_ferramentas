@@ -29,6 +29,29 @@ export default function UploadImagem({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri);
+
+      // ImagePicker saves the taken photo to disk and returns a local URI to it
+      let localUri = result.uri;
+      let filename = localUri.split('/').pop();
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
+
+      // Upload the image using the fetch and FormData APIs
+      let formData = new FormData();
+
+      // Assume "photo" is the name of the form field the server expects
+      formData.append('photo', { uri: localUri, name: 'photo', type });
+
+      return await fetch('http://localhost:3000/upload-imagem', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+      });
     }
   };
 
