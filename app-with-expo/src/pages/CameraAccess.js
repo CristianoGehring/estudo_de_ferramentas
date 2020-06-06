@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default function Example({ navigation }) {
+export default function HelloWorld({ navigation }) {
   return (
     <View style={styles.container}>
-      <Button title="Hello World" onPress={ () => navigation.navigate('HelloWorld') } />
-      <Button title="Acesso a Câmera" onPress={ () => navigation.navigate('CameraAccess') } />
+      <Text>Acesso a Câmera</Text>
+      <Button title="Inicial" onPress={ () => navigation.navigate('Inicial') } />
     </View>
   );
 }
