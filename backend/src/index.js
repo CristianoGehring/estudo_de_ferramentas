@@ -1,9 +1,8 @@
 require('dotenv').config()
 const express = require('express')
-const morgan = require("morgan");
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const path = require("path");
 const http = require('http')
 const routes = require('./routes')
 
@@ -17,13 +16,9 @@ mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_P
 
 //add other middleware
 app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
-app.use(
-  "/files",
-  express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
-);
+// app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({ limit: '15MB' }))
 
 app.use(routes)
 
