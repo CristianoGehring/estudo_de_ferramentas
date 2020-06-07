@@ -32,25 +32,6 @@ export default function UploadImagem({ navigation }) {
     }
   };
 
-  const saveImage = async (result) => {
-    let filename = result.uri.split('/').pop();
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`
-
-      return await fetch('http://192.168.0.153:3000/upload-imagem', {
-        method: 'POST',
-        body: JSON.stringify({
-          type,
-          filename,
-          imgsource: result.base64,
-        }),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-      });
-  }
-
   const takePicture = async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -65,6 +46,38 @@ export default function UploadImagem({ navigation }) {
       saveImage(result)
     }
   };
+
+  const saveImage = async (result) => {
+    getImage()
+    let filename = result.uri.split('/').pop();
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`
+
+    return await fetch('http://192.168.0.153:3000/upload-image', {
+      method: 'POST',
+      body: JSON.stringify({
+        type,
+        filename,
+        imgsource: result.base64,
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+  }
+
+  const getImage = (result) => {
+    fetch('http://192.168.0.153:3000/upload-image', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+    })
+    .then((response) => {
+      console.log(response.data)
+    })
+  }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
