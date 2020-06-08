@@ -9,6 +9,7 @@ export default function Example({ navigation }) {
   return (
     <View style={styles.container}>
       <Button title="Hello World" onPress={ () => navigation.navigate('HelloWorld') } />
+      <Button title="Upload Imagem" onPress={ () => navigation.navigate('UploadImagem') } />
     </View>
   );
 }
