@@ -1,23 +1,3 @@
-// import React from 'react';
-// import { Alert, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
-// import {Agenda} from 'react-native-calendars';
-
-// export default function Calendar({ navigation }) {
-//   constructor (props) {
-//     super(props);
-
-//     this.state = {
-//       items: {}
-//     };
-//   };
-
-//   return (
-//     <View style={styles.container}>
-      
-//       <Button title="Inicial" onPress={ () => navigation.navigate('Inicial') } />
-//     </View>
-//   );
-// }
 import React, {Component} from 'react';
 import {Alert, StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import {Agenda} from 'react-native-calendars';
@@ -58,8 +38,10 @@ export default class Calendar extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
+
     return (
-      <View style={{ marginTop: 50}}>
+      <>
         <Agenda
           testID={testIDs.agenda.CONTAINER}
           items={this.state.items}
@@ -83,7 +65,10 @@ export default class Calendar extends Component {
           //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
           // hideExtraDays={false}
         />
-      </View>
+        <View style={{ marginVertical: 10}}>
+          <Button title="Inicial" onPress={ () => navigation.navigate('Inicial') } />
+        </View>
+      </>
     );
   }
 
