@@ -2,14 +2,32 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 export default function Example({ navigation }) {
-  async function navegar() {
-    navigation.navigate('HelloWorld');
-  }    
+  const buttons = [
+    {
+      title: 'Hello Word',
+      route: 'HelloWorld'
+    },
+    {
+      title: 'Upload Imagem',
+      route: 'UploadImagem'
+    },
+    {
+      title: 'Calendário',
+      route: 'Calendar'
+    }
+  ]
+
+  var renderButton = (button, i) => {
+    return (
+      <View style={styles.buttons} key={i}>
+        <Button title={button.title} onPress={ () => navigation.navigate(`${button.route}`) } />
+      </View>
+    )
+  };
 
   return (
     <View style={styles.container}>
-      <Button title="Hello World" onPress={ () => navigation.navigate('HelloWorld') } />
-      <Button title="Upload Imagem" onPress={ () => navigation.navigate('UploadImagem') } />
+      { buttons.map(renderButton) }
     </View>
   );
 }
@@ -21,4 +39,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttons: {
+    width: '90%',
+    marginVertical: 6
+  }
 });
