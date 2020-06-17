@@ -22,4 +22,7 @@ app.use(bodyParser.json({ limit: '15MB' }))
 
 app.use(routes)
 
-server.listen(3000)
+var port = process.env.APP_PORT || 3000
+server.listen(port, function() {
+  console.log('Our app is running on http://localhost:' + port);
+});
