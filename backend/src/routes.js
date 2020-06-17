@@ -6,7 +6,7 @@ const UploadImageController = require('./controllers/UploadImageController')
 const routes = Router()
 
 routes.get('/', function(req, res) {
-    res.send('Hello World!')
+    res.send('Hello World!!!')
 })
 
 routes.get('/example', ExampleController.index)
