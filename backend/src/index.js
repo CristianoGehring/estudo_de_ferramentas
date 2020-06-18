@@ -28,13 +28,6 @@ mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_P
   useUnifiedTopology: true,
 })
 
-app.use((req, res, next) => {
-  req.io = io;
-  req.connectedUsers = connectedUsers;
-
-  return next();
-});
-
 //add other middleware
 app.use(cors())
 // app.use(express.json())
