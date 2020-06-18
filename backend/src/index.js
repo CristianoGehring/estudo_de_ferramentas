@@ -10,12 +10,17 @@ const app = express()
 const server = http.Server(app)
 const io = require('socket.io')(server)
 
-const connectedUsers = {};
+const messages = [];
 
 io.on('connection', socket => {
-  const { user } = socket.handshake.query;
+  console.log(`Socket conectado: ${socket.id}`)
 
-  connectedUsers[user] = socket.id;
+  socket.emit('previousMessages', messages)
+  
+  socket.on('sendMessage', data => {
+    messages.push(data)
+    socket.broadcast.emit('receivedMessage', data)
+  })
 });
 
 mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@cluster0-lozjt.mongodb.net/" + process.env.DB_NAME + "?retryWrites=true&w=majority", {
