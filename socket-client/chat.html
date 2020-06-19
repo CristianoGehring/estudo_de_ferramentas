@@ -16,7 +16,7 @@
         <button type="submit">Enviar</button>
     </form>
     <script>
-        var socket = io('http://localhost:3000');
+        var socket = io('https://estudo-ferramentas.herokuapp.com/');
         function renderMessage (message) {
             $('.messages').append(`<div class="message"><strong>${message.author}:</strong> ${message.message}</div>`)
         }
@@ -37,11 +37,13 @@
             var author = $('input[name=username]').val()
             var message = $('input[name=message]').val()
 
-            if (author.length && message.length) {
+            if (author.trim().length && message.trim().length) {
                 var messageObject = {
                     author,
                     message
                 }
+
+                $('input[name=message]').val('')
 
                 renderMessage(messageObject)
 
