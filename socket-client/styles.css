@@ -44,3 +44,15 @@ button {
   padding: 20px;
   overflow-y: auto;
 }
+@media (max-width:600px) {
+  .messages {
+    width: 95%;
+    height: 400px;
+  }
+  input {
+    width: 95%;
+  }
+  button {
+    width: 95%;
+  }
+}
