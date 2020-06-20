@@ -37,11 +37,13 @@
             var author = $('input[name=username]').val()
             var message = $('input[name=message]').val()
 
-            if (author.length && message.length) {
+            if (author.trim().length && message.trim().length) {
                 var messageObject = {
                     author,
                     message
                 }
+
+                $('input[name=message]').val('')
 
                 renderMessage(messageObject)
 
