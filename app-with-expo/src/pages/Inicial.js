@@ -16,6 +16,10 @@ export default function Example({ navigation }) {
       route: 'Calendar',
     },
     {
+      title: 'Chat',
+      route: 'Chat',
+    },
+    {
       title: 'Hello Word',
       route: 'HelloWorld',
       style: 'text'

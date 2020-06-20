@@ -9,12 +9,14 @@ import Inicial from './pages/Inicial';
 import HelloWorld from './pages/HelloWorld';
 import UploadImagem from './pages/UploadImagem';
 import Calendar from './pages/Calendar';
+import Chat from './pages/Chat';
 
 const Routes = createAppContainer(
   createStackNavigator({
     Inicial,
     UploadImagem,
     Calendar,
+    Chat,
     HelloWorld
   }, {
     defaultNavigationOptions: {
