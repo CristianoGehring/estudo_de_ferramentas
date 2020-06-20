@@ -65,9 +65,6 @@ export default class Calendar extends Component {
           //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
           // hideExtraDays={false}
         />
-        <View style={{ marginVertical: 10}}>
-          <Button title="Inicial" onPress={ () => navigation.navigate('Inicial') } />
-        </View>
       </>
     );
   }

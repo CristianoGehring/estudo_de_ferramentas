@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 import SocketIOClient from 'socket.io-client';
+import { Button } from 'react-native-paper';
 
 var socket = SocketIOClient('https://estudo-ferramentas.herokuapp.com/');
 var allMessages = []
@@ -45,23 +46,27 @@ export default function Chat({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: '90%', marginVertical: 6 }}
-        onChangeText={text => setAthor(text)}
-        value={author}
-      />
-
-      <View style={{ width: '90%', marginVertical: 6}}>
-        { allMessages.map(renderMessages) }
-      </View>
+      <ScrollView style={{width:'100%',}} contentContainerStyle={{ width: '100%',justifyContent: 'center',alignItems: 'center',}}>
+        <TextInput
+          style={{ height: 40, borderColor: 'rgba(255, 255, 255, .4)', borderWidth: 1, width: '90%', marginVertical: 6, paddingHorizontal: 8, color: 'white', borderRadius: 6 }}
+          onChangeText={text => setAthor(text)}
+          value={author}
+        />
+  
+        <Text style={{ width: '90%', marginVertical: 6, color: 'white',}}>
+          { allMessages.map(renderMessages) }
+        </Text>
+      </ScrollView>
       
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: '90%', marginVertical: 6 }}
-        onChangeText={text => setMessage(text)}
-        value={message}
-      />
-
-      <Button style={{ width: '90%', marginVertical: 6 }} title="Enviar" onPress={ () => { sendMessage() } } />
+      <View style={{width:'100%', flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
+        <TextInput
+          style={{ height: 40, borderColor: 'rgba(255, 255, 255, .4)', borderWidth: 1, width: '70%', marginVertical: 6, marginRight: 4, paddingHorizontal: 8, color: 'white', borderRadius: 6 }}
+          onChangeText={text => setMessage(text)}
+          value={message}
+        />
+  
+        <Button onPress={ () => { sendMessage() } } mode='contained'>Enviar</Button>
+      </View>
     </View>
   );
 }
@@ -69,8 +74,7 @@ export default function Chat({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });

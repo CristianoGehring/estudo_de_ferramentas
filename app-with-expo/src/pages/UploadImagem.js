@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
+import { Button } from 'react-native-paper';
 
 export default function UploadImagem({ navigation }) {
   const [image, setImage] = useState(null);
@@ -81,10 +82,9 @@ export default function UploadImagem({ navigation }) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button title="Escolha uma imagem do rolo da câmera" onPress={pickImage} />
-      <Button title="Utilize a câmera" onPress={takePicture} />
+      <Button onPress={pickImage} mode='contained' style={{width:'90%', marginVertical: 6}}>"Escolha uma imagem do rolo da câmera</Button>
+      <Button onPress={takePicture} mode='contained' style={{width:'90%', marginVertical: 6}}>Utilize a câmera</Button>
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      <Button title="Inicial" onPress={ () => navigation.navigate('Inicial') } />
     </View>
   );
 }

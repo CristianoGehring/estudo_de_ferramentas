@@ -36,10 +36,10 @@ export default function Example({ navigation }) {
 
   return (
     <View style={styles.box}>
-      {/* <Image
+      <Image
         style={styles.tinyLogo}
         source={require('../../assets/logo.png')}
-      /> */}
+      />
         <View style={styles.container}>
           { buttons.map(renderButton) }
         </View>
