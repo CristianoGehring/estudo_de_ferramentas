@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import { Button } from 'react-native-paper';
+import { Input } from '../style/style';
 
 var socket = SocketIOClient('https://estudo-ferramentas.herokuapp.com/');
 var allMessages = []
@@ -17,7 +18,7 @@ export default function Chat({ navigation }) {
 
   function renderMessages (message, i) {
     return (
-      <Text key={i}>{message.author}: {message.message}</Text>
+      <Text style={{ color: 'white'}} key={i}>{message.author}: {message.message}</Text>
     )
   }
 
@@ -47,20 +48,22 @@ export default function Chat({ navigation }) {
   return (
     <View style={styles.container}>
       <ScrollView style={{width:'100%',}} contentContainerStyle={{ width: '100%',justifyContent: 'center',alignItems: 'center',}}>
-        <TextInput
-          style={{ height: 40, borderColor: 'rgba(255, 255, 255, .4)', borderWidth: 1, width: '90%', marginVertical: 6, paddingHorizontal: 8, color: 'white', borderRadius: 6 }}
+        <Input
+          style={{ width: '90%'}}
           onChangeText={text => setAthor(text)}
           value={author}
         />
   
-        <Text style={{ width: '90%', marginVertical: 6, color: 'white',}}>
-          { allMessages.map(renderMessages) }
-        </Text>
+        <View style={{width:'100%', flexDirection: 'column',alignItems: 'center'}}>
+          <View style={{ width: '90%', marginVertical: 6}}>
+            { allMessages.map(renderMessages) }
+          </View>
+        </View>
       </ScrollView>
       
       <View style={{width:'100%', flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
-        <TextInput
-          style={{ height: 40, borderColor: 'rgba(255, 255, 255, .4)', borderWidth: 1, width: '70%', marginVertical: 6, marginRight: 4, paddingHorizontal: 8, color: 'white', borderRadius: 6 }}
+        <Input
+          style={{width:'70%', marginRight: 8}}
           onChangeText={text => setMessage(text)}
           value={message}
         />
