@@ -5,23 +5,24 @@ import { Button } from 'react-native-paper';
 import { Input } from '../style/style';
 
 var socket = SocketIOClient('https://estudo-ferramentas.herokuapp.com/');
+var previousMessages = [];
+socket.on('previousMessages', (messagesObject) => {
+  previousMessages = messagesObject;
+  
+})
 
 export default function Chat({ navigation }) {
   const [author, setAthor] = React.useState('');
   const [message, setMessage] = React.useState('');
-  const [messages, setMessages] = React.useState([]);
+  var [messages, setMessages] = React.useState([]);
 
   useEffect(() => {
-    socket.on('previousMessages', function(messagesObject) {
-      console.log('previousMessages', messagesObject)
-      setMessages([messagesObject, ...messages])
-    })
+    setMessages(previousMessages)
   }, [])
 
   socket.on('receivedMessage', (messageObject) => {
-    console.log('receivedMessage', messageObject)
+    console.log('receivedMessage', messages)
     setMessages([...messages, messageObject])
-    setMessage('')
   })
 
   const sendMessage = () => {
@@ -56,7 +57,7 @@ export default function Chat({ navigation }) {
   
         <View style={{width:'100%', flexDirection: 'column',alignItems: 'center'}}>
           <View style={{ width: '90%', marginVertical: 6}}>
-            { allMessages.map(renderMessages) }
+            { messages.map(renderMessages) }
           </View>
         </View>
       </ScrollView>
