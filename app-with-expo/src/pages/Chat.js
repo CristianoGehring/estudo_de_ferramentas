@@ -1,31 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import { Button } from 'react-native-paper';
 import { Input } from '../style/style';
 
 var socket = SocketIOClient('https://estudo-ferramentas.herokuapp.com/');
-var allMessages = []
-
-socket.on('previousMessages', function(messages) {
-  allMessages = messages
-})
 
 export default function Chat({ navigation }) {
   const [author, setAthor] = React.useState('');
   const [message, setMessage] = React.useState('');
-  // const [messages, setMessages] = React.useState(previousMessages);
+  const [messages, setMessages] = React.useState([]);
 
-  function renderMessages (message, i) {
-    return (
-      <Text style={{ color: 'white'}} key={i}>{message.author}: {message.message}</Text>
-    )
-  }
+  useEffect(() => {
+    socket.on('previousMessages', function(messagesObject) {
+      console.log('previousMessages', messagesObject)
+      setMessages([messagesObject, ...messages])
+    })
+  }, [])
 
-  socket.on('receivedMessage', (message) => {
-    console.log('receivedMessage', message)
-    allMessages.push(message)
-    console.log(allMessages)
+  socket.on('receivedMessage', (messageObject) => {
+    console.log('receivedMessage', messageObject)
+    setMessages([...messages, messageObject])
     setMessage('')
   })
 
@@ -36,13 +31,18 @@ export default function Chat({ navigation }) {
             message
         }
 
-        allMessages.push(messageObject)
-        // setMessages(messages)
+        setMessages([...messages, messageObject])
 
         socket.emit('sendMessage', messageObject)
 
         setMessage('')
     }
+  }
+
+  function renderMessages (message, i) {
+    return (
+      <Text style={{ color: 'white'}} key={i}>{message.author}: {message.message}</Text>
+    )
   }
 
   return (
