@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native'
 import Routes from './src/routes';
+import * as Updates from 'expo-updates'
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 const theme = {
@@ -25,7 +26,19 @@ const MyTheme = {
 };
 
 export default function App(props) {
-  console.log(props)
+  useEffect(() => {
+    async function updateApp() {
+      const { isAvailable } = await Updates.checkForUpdateAsync()
+      
+      if (isAvailable) {
+        await Updates.fetchUpdateAsync()
+        await Updates.reloadAsync()
+      }
+    }    
+
+    updateApp()
+  }, [])
+  
   return (
     <>
       <PaperProvider theme={theme}>

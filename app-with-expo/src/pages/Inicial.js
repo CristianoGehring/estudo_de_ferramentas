@@ -20,7 +20,7 @@ export default function Example({ navigation }) {
       route: 'Chat',
     },
     {
-      title: 'Hello Word',
+      title: 'Hello World',
       route: 'HelloWorld',
       style: 'text'
     },
